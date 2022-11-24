@@ -67,7 +67,7 @@ export interface ReactJsonViewProps {
    *
    * Default: []
    */
-  highlightList?: string[];
+  highlightList?: Record<string, any>[];
   /**
    * When an integer value is assigned, arrays will be displayed in groups by count of the value.
    * Groups are displayed with brakcet notation and can be expanded and collapsed by clickong on the brackets.
