@@ -55,12 +55,19 @@ export interface ReactJsonViewProps {
    */
   collapseStringsAfterLength?: number | false;
   /**
-   * Callback function to provide control over what objects and arrays should be collapsed by default.
-   * An object is passed to the callback containing name, src, type ("array" or "object") and namespace.
+   * A list of json elements to highlight by type
+   * See dev-server/src/index.js for an example
    *
    * Default: false
    */
   shouldCollapse?: false | ((field: CollapsedFieldProps) => boolean);
+  /**
+   * Callback function to provide control over what objects and arrays should be collapsed by default.
+   * An object is passed to the callback containing name, src, type ("array" or "object") and namespace.
+   *
+   * Default: []
+   */
+  highlightList?: string[];
   /**
    * When an integer value is assigned, arrays will be displayed in groups by count of the value.
    * Groups are displayed with brakcet notation and can be expanded and collapsed by clickong on the brackets.
