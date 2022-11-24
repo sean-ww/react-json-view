@@ -9,6 +9,27 @@ import Moment from 'moment';
 //import the react-json-view component (installed with npm)
 import JsonViewer from './../../src/js/index';
 
+// the changeList translates to the highlightList in the configurator
+const changeList = [{type: 'add', key: 'dev-server.locale'}, {type: 'add', key: 'dev-server.metadata[name=onboarding_country_code]'}, {
+    key: 'dev-server.accounts[uuid=e6f92b16-da43-44de-9b59-4759a52e0b3b].metadata[name=test3]',
+    type: 'add',
+    value: {
+        name: 'test3',
+        value: 'val3.1',
+    },
+}, {
+    key: 'addresses[uuid=550b2d5a-f277-4e98-8f6c-8f36115be992].city',
+    oldValue: 'Bern',
+    type: 'update',
+    value: 'Zürich',
+},];
+const highlightList = [
+    {type: 'update', namespace: 'dev-server', key: 'locale'},
+    {type: 'remove', namespace: 'dev-server,metadata,0'},
+    {type: 'add', namespace: 'dev-server,accounts,0,metadata,1'},
+    {type: 'update', namespace: 'dev-server,addresses,0', key: 'city'},
+];
+
 //render 2 different examples of the react-json-view component
 ReactDom.render(
     <div>
@@ -16,7 +37,8 @@ ReactDom.render(
         <JsonViewer
             sortKeys
             style={{ padding: '30px', backgroundColor: 'white' }}
-            src={getExampleJson1()}
+            src={getExampleJsonA()}
+            highlightList={highlightList}
             quotesOnKeys={false}
             collapseStringsAfterLength={12}
             onEdit={e => {
@@ -56,118 +78,118 @@ ReactDom.render(
 
         <br />
 
-        {/* use a base16 theme */}
-        <JsonViewer
-            src={getExampleJson1()}
-            theme="railscasts"
-            validationMessage="You're doing something wrong."
-            collapseStringsAfterLength={15}
-            onEdit={e => {
-                console.log(e);
-                if (e.new_value === 'error') {
-                    return false;
-                }
-            }}
-            onDelete={e => {
-                console.log(e);
-            }}
-            onAdd={e => {
-                console.log(e);
-                if (e.new_value === 'error') {
-                    return false;
-                }
-            }}
-            name={false}
-            iconStyle="triangle"
-            shouldCollapse={({ src, type }) =>
-                type === 'object' &&
-                src.constructor &&
-                src.constructor.name === 'Moment'
-            }
-        />
+        {/*/!* use a base16 theme *!/*/}
+        {/*<JsonViewer*/}
+        {/*    src={getExampleJson1()}*/}
+        {/*    theme="railscasts"*/}
+        {/*    validationMessage="You're doing something wrong."*/}
+        {/*    collapseStringsAfterLength={15}*/}
+        {/*    onEdit={e => {*/}
+        {/*        console.log(e);*/}
+        {/*        if (e.new_value === 'error') {*/}
+        {/*            return false;*/}
+        {/*        }*/}
+        {/*    }}*/}
+        {/*    onDelete={e => {*/}
+        {/*        console.log(e);*/}
+        {/*    }}*/}
+        {/*    onAdd={e => {*/}
+        {/*        console.log(e);*/}
+        {/*        if (e.new_value === 'error') {*/}
+        {/*            return false;*/}
+        {/*        }*/}
+        {/*    }}*/}
+        {/*    name={false}*/}
+        {/*    iconStyle="triangle"*/}
+        {/*    shouldCollapse={({ src, type }) =>*/}
+        {/*        type === 'object' &&*/}
+        {/*        src.constructor &&*/}
+        {/*        src.constructor.name === 'Moment'*/}
+        {/*    }*/}
+        {/*/>*/}
 
-        <br />
+        {/*<br />*/}
 
-        {/* initialize this one with a name and default collapsed */}
-        <JsonViewer
-            src={getExampleJson2()}
-            collapsed={true}
-            name={'feature_set'}
-            displayDataTypes={false}
-            indentWidth={2}
-        />
+        {/*/!* initialize this one with a name and default collapsed *!/*/}
+        {/*<JsonViewer*/}
+        {/*    src={getExampleJson2()}*/}
+        {/*    collapsed={true}*/}
+        {/*    name={'feature_set'}*/}
+        {/*    displayDataTypes={false}*/}
+        {/*    indentWidth={2}*/}
+        {/*/>*/}
 
-        <br />
+        {/*<br />*/}
 
-        {/* initialize this one with a name and default collapsed */}
-        <JsonViewer
-            src={getExampleJson2()}
-            collapsed={1}
-            name={'feature_set'}
-            displayDataTypes={false}
-            indentWidth={5}
-        />
+        {/*/!* initialize this one with a name and default collapsed *!/*/}
+        {/*<JsonViewer*/}
+        {/*    src={getExampleJson2()}*/}
+        {/*    collapsed={1}*/}
+        {/*    name={'feature_set'}*/}
+        {/*    displayDataTypes={false}*/}
+        {/*    indentWidth={5}*/}
+        {/*/>*/}
 
-        <br />
+        {/*<br />*/}
 
-        {/* initialize an example with a long string */}
-        <JsonViewer
-            src={getExampleJson3()}
-            collapsed={true}
-            name={'collapsed_by_default_example'}
-            indentWidth={8}
-            displayObjectSize={false}
-            displayDataTypes={false}
-            enableClipboard={false}
-        />
+        {/*/!* initialize an example with a long string *!/*/}
+        {/*<JsonViewer*/}
+        {/*    src={getExampleJson3()}*/}
+        {/*    collapsed={true}*/}
+        {/*    name={'collapsed_by_default_example'}*/}
+        {/*    indentWidth={8}*/}
+        {/*    displayObjectSize={false}*/}
+        {/*    displayDataTypes={false}*/}
+        {/*    enableClipboard={false}*/}
+        {/*/>*/}
 
-        <br />
+        {/*<br />*/}
 
-        {/*demo array support*/}
-        <JsonViewer
-            src={getExampleArray()}
-            theme="solarized"
-            onEdit={edit => {
-                console.log(edit);
-            }}
-        />
+        {/*/!*demo array support*!/*/}
+        {/*<JsonViewer*/}
+        {/*    src={getExampleArray()}*/}
+        {/*    theme="solarized"*/}
+        {/*    onEdit={edit => {*/}
+        {/*        console.log(edit);*/}
+        {/*    }}*/}
+        {/*/>*/}
 
-        <br />
+        {/*<br />*/}
 
-        {/* custom theme example */}
-        <JsonViewer
-            enableClipboard={false}
-            src={getExampleJson1()}
-            shouldCollapse={({ src, namespace, type }) =>
-                namespace.indexOf('moment') > -1
-            }
-            theme={{
-                base00: 'white',
-                base01: '#ddd',
-                base02: '#ddd',
-                base03: '#444',
-                base04: 'purple',
-                base05: '#444',
-                base06: '#444',
-                base07: '#444',
-                base08: '#444',
-                base09: 'rgba(70, 70, 230, 1)',
-                base0A: 'rgba(70, 70, 230, 1)',
-                base0B: 'rgba(70, 70, 230, 1)',
-                base0C: 'rgba(70, 70, 230, 1)',
-                base0D: 'rgba(70, 70, 230, 1)',
-                base0E: 'rgba(70, 70, 230, 1)',
-                base0F: 'rgba(70, 70, 230, 1)'
-            }}
-        />
+        {/*/!* custom theme example *!/*/}
+        {/*<JsonViewer*/}
+        {/*    enableClipboard={false}*/}
+        {/*    src={getExampleJson1()}*/}
+        {/*    shouldCollapse={({ src, namespace, type }) =>*/}
+        {/*        namespace.indexOf('moment') > -1*/}
+        {/*    }*/}
+        {/*    theme={{*/}
+        {/*        base00: 'white',*/}
+        {/*        base01: '#ddd',*/}
+        {/*        base02: '#ddd',*/}
+        {/*        base03: '#444',*/}
+        {/*        base04: 'purple',*/}
+        {/*        base05: '#444',*/}
+        {/*        base06: '#444',*/}
+        {/*        base07: '#444',*/}
+        {/*        base08: '#444',*/}
+        {/*        base09: 'rgba(70, 70, 230, 1)',*/}
+        {/*        base0A: 'rgba(70, 70, 230, 1)',*/}
+        {/*        base0B: 'rgba(70, 70, 230, 1)',*/}
+        {/*        base0C: 'rgba(70, 70, 230, 1)',*/}
+        {/*        base0D: 'rgba(70, 70, 230, 1)',*/}
+        {/*        base0E: 'rgba(70, 70, 230, 1)',*/}
+        {/*        base0F: 'rgba(70, 70, 230, 1)'*/}
+        {/*    }}*/}
+        {/*/>*/}
 
-        <JsonViewer
-            theme="hopscotch"
-            collapsed={false}
-            name="large_array"
-            groupArraysAfterLength={50}
-            src={getExampleJson4()}
-        />
+        {/*<JsonViewer*/}
+        {/*    theme="hopscotch"*/}
+        {/*    collapsed={false}*/}
+        {/*    name="large_array"*/}
+        {/*    groupArraysAfterLength={50}*/}
+        {/*    src={getExampleJson4()}*/}
+        {/*/>*/}
     </div>,
     document.getElementById('app-container')
 );
@@ -202,6 +224,66 @@ function getExampleJson1() {
         date: new Date(),
         moment: Moment(),
         regexp: /[0-9]/gi
+    };
+}
+
+function getExampleJsonA() {
+    return {
+        accounts: [
+            {
+                metadata: [
+                    {
+                        name: 'test1',
+                        value: 'val2',
+                    },
+                    {
+                        name: 'test3',
+                        value: 'val3.1',
+                    },
+                ],
+                addresses: [],
+                uuid: 'e6f92b16-da43-44de-9b59-4759a52e0b3b',
+            },
+            {
+                metadata: [
+                    {
+                        name: 'iban',
+                        value: 'CH9300762011623852957',
+                    },
+                    {
+                        name: 'bank_name',
+                        value: 'Alternative Bank',
+                    },
+                ],
+                uuid: '8812e7bd-8eb2-4ce7-a427-b231cfae942f',
+            },
+        ],
+        "metadata": [
+            {
+                "name": "onboarding_country_code",
+                "value": "CH"
+            }
+        ],
+        addresses: [
+            {
+                world_code: 'EARTH',
+                address_line2: 'CH',
+                address_line1: 'Hardturmstrasse 101',
+                city: 'Zürich',
+                created: 1662016609,
+                postal_code: '8005',
+                type: 'main',
+                uuid: '550b2d5a-f277-4e98-8f6c-8f36115be992',
+            },
+        ],
+        "website_url": "",
+        "created": 1669291629,
+        "approval_status": "new",
+        "merchant_category_code": "8699",
+        "name": "Livios Unapproved Org",
+        "active": false,
+        "locale": "de_CH",
+        "uuid": "10140a3a-1ab5-4080-8e56-0446d9ca1fef"
     };
 }
 

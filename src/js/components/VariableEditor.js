@@ -55,9 +55,42 @@ class VariableEditor extends React.PureComponent {
             onDelete,
             onSelect,
             displayArrayKey,
-            quotesOnKeys
+            quotesOnKeys,
+            highlightList
         } = this.props;
         const { editMode } = this.state;
+
+        const getMatchingChanges = () => (highlightList || []).reduce((matches, highlightItem) => {
+          if (highlightItem.namespace !== namespace.toString()) {
+            return matches;
+          }
+          if (!highlightItem.key) {
+            matches.push(highlightItem.type);
+            return matches;
+          }
+          if (highlightItem.key === variable.name) {
+            matches.push(highlightItem.type);
+            return matches;
+          }
+          return matches;
+        }, []);
+
+        const addHighlighting = () => {
+          const matchingChanges = getMatchingChanges();
+          const firstMatchingChange = matchingChanges.length > 0 ? matchingChanges[0] : '';
+
+          switch (firstMatchingChange) {
+            case 'add':
+              return { backgroundColor: '#e3fcef' };
+            case 'update':
+              return { backgroundColor: '#cceeff' };
+            case 'remove':
+              return { backgroundColor: '#ffebe6' };
+            default:
+              return {};
+          }
+        };
+
         return (
             <div
                 {...Theme(theme, 'objectKeyVal', {
@@ -71,6 +104,7 @@ class VariableEditor extends React.PureComponent {
                 }
                 class="variable-row"
                 key={variable.name}
+                style={addHighlighting()}
             >
                 {type == 'array' ? (
                     displayArrayKey ? (
